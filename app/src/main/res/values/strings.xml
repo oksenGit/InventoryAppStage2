@@ -1,0 +1,20 @@
+<resources>
+    <!-- General Strings -->
+    <string name="app_name">Inventory</string>
+    <string name="price">Price: </string>
+    <string name="qty">QTY: </string>
+
+    <!--Inventory Layout Strings-->
+    <string name="my_inventory">My Inventory</string>
+    <string name="add_product">Add Product</string>
+    <string name="sale">Sale</string>
+
+    <!--Product Details Layout-->
+    <string name="product_details">Product Details</string>
+    <string name="supplier_name">Supplier: </string>
+    <string name="supplier_phone">Phone: </string>
+
+    <!--Product Edit Layout-->
+    <string name="edit_product">Edit Product</string>
+
+</resources>
