@@ -63,7 +63,7 @@ public class InvetoryCursorAdapter extends CursorAdapter {
         final String currentSupplier = cursor.getString(supplierColumnIndex);
         final String currentSupplierPhone = cursor.getString(phoneColumnIndex);
 
-        if(currentImage.isEmpty()){
+        if(currentImage==null){
             image.setImageResource(R.drawable.noimage);
         }
 
@@ -89,4 +89,5 @@ public class InvetoryCursorAdapter extends CursorAdapter {
             }
         });
     }
+
 }

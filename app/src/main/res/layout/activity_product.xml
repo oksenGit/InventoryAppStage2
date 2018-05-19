@@ -7,7 +7,7 @@
     android:background="@color/colorBackground">
 
     <ImageView
-        android:id="@+id/details_image"
+        android:id="@+id/product_image"
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/noimage" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/product_add_edit"
+        android:id="@+id/product_add_edit_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="8dp"
@@ -27,10 +27,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/details_image"
+        app:layout_constraintBottom_toBottomOf="@+id/product_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/details_image"
+        app:layout_constraintTop_toTopOf="@+id/product_image"
         app:srcCompat="@drawable/add" />
 
     <LinearLayout
@@ -57,6 +57,7 @@
         <ImageButton
             android:id="@+id/product_edit"
             android:layout_width="50dp"
+            android:focusable="false"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="0"
@@ -67,10 +68,22 @@
             android:id="@+id/product_delete"
             android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:focusable="false"
             android:layout_gravity="center_vertical"
             android:layout_weight="0"
             android:background="@color/colorPrimary"
             app:srcCompat="@drawable/delete" />
+
+        <TextView
+            android:id="@+id/product_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:focusable="false"
+            android:padding="10dp"
+            android:text="Save"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <TextView
@@ -86,7 +99,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/details_image"
+        app:layout_constraintTop_toBottomOf="@+id/product_image"
         tools:text="Product Name" />
 
     <EditText
@@ -105,7 +118,7 @@
         android:textColorHint="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/details_image" />
+        app:layout_constraintTop_toBottomOf="@+id/product_image" />
 
     <TextView
         android:id="@+id/textView3"
@@ -113,13 +126,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:text="@string/price"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_name_edit" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.57" />
 
     <TextView
         android:id="@+id/product_price_text"
@@ -174,8 +188,8 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="10"
-        android:textColorHint="@color/colorAccent"
         android:inputType="number"
+        android:textColorHint="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/product_price_edit"
         app:layout_constraintTop_toBottomOf="@+id/product_price_edit" />
 
@@ -184,38 +198,35 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="24dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="160dp"
+        android:layout_marginStart="160dp"
         android:padding="0dp"
         android:text="+"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/product_qty_edit"
-        app:layout_constraintStart_toEndOf="@+id/product_qty_edit"
-        app:layout_constraintTop_toTopOf="@+id/product_qty_edit" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <Button
         android:id="@+id/product_qty_down"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="24dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginStart="44dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:padding="0dp"
         android:text="-"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/product_qty_edit"
-        app:layout_constraintStart_toEndOf="@+id/product_qty_edit"
-        app:layout_constraintTop_toTopOf="@+id/product_qty_edit"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toBottomOf="@+id/product_qty_up"
+        app:layout_constraintStart_toEndOf="@+id/product_qty_up"
+        app:layout_constraintTop_toTopOf="@+id/product_qty_up" />
 
     <TextView
         android:id="@+id/product_qty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="@+id/product_price_edit"
         app:layout_constraintTop_toTopOf="@+id/textView6"
@@ -229,12 +240,13 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:cardBackgroundColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_qty_edit">
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -273,15 +285,13 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:text="@string/supplier_phone"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_supplier_edit" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/product_phone_text"
@@ -315,15 +325,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
                 android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/product_phone_edit"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/call" />
         </android.support.constraint.ConstraintLayout>

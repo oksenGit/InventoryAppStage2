@@ -1,8 +1,10 @@
 package com.example.android.inventory;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,7 +49,26 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         cursorAdapter = new InvetoryCursorAdapter(this,null);
         listView.setAdapter(cursorAdapter);
 
-        insertProduct();
+        addProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(InventoryActivity.this, ProductActivity.class);
+                intent.putExtra("mode",0);
+                startActivity(intent);
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Log.i("Inventory", "CLICK CLICK");
+                Intent intent = new Intent(InventoryActivity.this, ProductActivity.class);
+                intent.setData(ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id));
+                intent.putExtra("mode",2);
+                startActivity(intent);
+            }
+        });
+
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
 
