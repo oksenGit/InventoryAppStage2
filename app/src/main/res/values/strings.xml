@@ -8,6 +8,7 @@
     <string name="my_inventory">My Inventory</string>
     <string name="add_product">Add Product</string>
     <string name="sale">Sale</string>
+    <string name="empty">↗\nStart by adding a product from the top right corner</string>
 
     <!--Product Details Layout-->
     <string name="product_details">Product Details</string>

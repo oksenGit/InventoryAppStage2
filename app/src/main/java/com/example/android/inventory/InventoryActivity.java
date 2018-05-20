@@ -36,6 +36,8 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     @BindView(R.id.inventory_add)
     TextView addProductButton;
 
+    @BindView(R.id.empty_text) TextView emptyText;
+
     InvetoryCursorAdapter cursorAdapter;
 
 
@@ -68,6 +70,8 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
                 startActivity(intent);
             }
         });
+
+        listView.setEmptyView(emptyText);
 
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
