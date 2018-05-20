@@ -57,6 +57,8 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
     private int currentMode; //We ge its value from intent parameters as Details and Edit Uri is the same
     private Uri productUri; // We need to get the product ID from that Uri
     private Uri productImageUri;
+    String imageString;
+    boolean imageLoadedFromDatabase = false;
 
     //Binding all the Views in this activity and decide what to show
     //depending on our current mode using the function modeSetter
@@ -170,14 +172,16 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
         modeSetter(currentMode);
     }
-    
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             productImageUri = data.getData();
+            imageString = productImageUri.toString();
             Log.i(LOG, "RESULT URI:" + productImageUri.toString());
             Picasso.get().load(productImageUri).into(productimage);
+            getSupportLoaderManager().initLoader(1, null, ProductActivity.this);
         }
     }
 
@@ -273,7 +277,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
 
             if (productImageUri != null) {
-                Log.i(LOG, productImageUri.toString());
+                Log.i(LOG, "FROM SAVE:" + productImageUri.toString());
                 values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_IMAGE, productImageUri.toString());
             }
             if (currentMode == MODE_ADD) {
@@ -353,7 +357,10 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
             int supplierColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME);
             int phoneColIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
 
-            String imageString = cursor.getString(imageColIndex);
+            if (!imageLoadedFromDatabase) {
+                imageString = cursor.getString(imageColIndex);
+                imageLoadedFromDatabase = true;
+            }
             if (!TextUtils.isEmpty(imageString) && currentMode != MODE_ADD) {
                 productImageUri = Uri.parse(imageString);
             }
@@ -392,4 +399,5 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         productPhoneEdit.setText("");
         productimage.setImageBitmap(null);
     }
+
 }
