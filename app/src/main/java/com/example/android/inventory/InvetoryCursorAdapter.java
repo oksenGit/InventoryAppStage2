@@ -5,6 +5,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.inventory.data.InventoryContract;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.PicassoProvider;
 
 import java.net.URI;
 
@@ -52,19 +56,20 @@ public class InvetoryCursorAdapter extends CursorAdapter {
         int priceColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY);
         int imageColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_IMAGE);
-        int supplierColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME);
-        int phoneColumnIndex = cursor.getColumnIndex(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
 
         final int id = cursor.getInt(idColumnIndex);
         final String currentName = cursor.getString(nameColumnIndex);
         final Double currentPrice = cursor.getDouble(priceColumnIndex);
         final int currentQuantity = cursor.getInt(quantityColumnIndex);
         final String currentImage = cursor.getString(imageColumnIndex);
-        final String currentSupplier = cursor.getString(supplierColumnIndex);
-        final String currentSupplierPhone = cursor.getString(phoneColumnIndex);
-
-        if(currentImage==null){
+        Uri imageUri = null;
+        if(!TextUtils.isEmpty(currentImage))
+           imageUri = Uri.parse(currentImage);
+        if(imageUri == null || TextUtils.isEmpty(currentImage)){
             image.setImageResource(R.drawable.noimage);
+        } else {
+            Log.i("TAG","image Uri = " + imageUri.toString());
+            Picasso.get().load(imageUri).into(image);
         }
 
         name.setText(currentName);
@@ -78,12 +83,8 @@ public class InvetoryCursorAdapter extends CursorAdapter {
                 if(currentQuantity>0){
                     ContentValues values = new ContentValues();
                     Uri uri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
-                    values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME, currentName);
-                    values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE, currentPrice);
                     values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY, currentQuantity-1);
-                    values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_IMAGE, currentImage);
-                    values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME, currentSupplier);
-                    values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, currentSupplierPhone);
+
                     int rowsAffected = view.getContext().getContentResolver().update(uri, values, null, null);
                 }
             }

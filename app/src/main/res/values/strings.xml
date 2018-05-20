@@ -17,4 +17,18 @@
     <!--Product Edit Layout-->
     <string name="edit_product">Edit Product</string>
 
+    <!--TALK TO MEEEE-->
+    <string name="insertion_success">Product Inserted Successfully</string>
+    <string name="insertion_failed">Product Insertion Failed</string>
+
+    <string name="update_success">Product Updated Successfully</string>
+    <string name="update_failed">Product Update Failed</string>
+
+
+    <string name="delete_confirm">Delete Product?</string>
+    <string name="delete_yes">Delete</string>
+    <string name="delete_no">Cancel</string>
+    <string name="delete_success">Product Deleted</string>
+    <string name="delete_failed">Product Deletion Failed</string>
+
 </resources>
