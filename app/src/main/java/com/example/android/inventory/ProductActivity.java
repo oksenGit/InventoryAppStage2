@@ -1,15 +1,8 @@
 package com.example.android.inventory;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,8 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,15 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -181,7 +164,6 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
             imageString = productImageUri.toString();
             Log.i(LOG, "RESULT URI:" + productImageUri.toString());
             Picasso.get().load(productImageUri).into(productimage);
-            getSupportLoaderManager().initLoader(1, null, ProductActivity.this);
         }
     }
 

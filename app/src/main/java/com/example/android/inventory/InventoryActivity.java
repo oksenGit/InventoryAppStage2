@@ -68,6 +68,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
                 intent.setData(ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id));
                 intent.putExtra("mode",2);
                 startActivity(intent);
+                cursorAdapter.notifyDataSetChanged();
             }
         });
 
@@ -108,5 +109,11 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cursorAdapter.notifyDataSetChanged();
     }
 }
