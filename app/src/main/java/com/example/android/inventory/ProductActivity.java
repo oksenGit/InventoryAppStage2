@@ -7,7 +7,9 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -166,19 +170,14 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
         modeSetter(currentMode);
     }
-
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             productImageUri = data.getData();
             Log.i(LOG, "RESULT URI:" + productImageUri.toString());
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), productImageUri);
-                productimage.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Picasso.get().load(productImageUri).into(productimage);
         }
     }
 
@@ -219,6 +218,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                 add_edit_ImageButton.setImageResource(R.drawable.edit);
                 titleText.setText(getResources().getString(R.string.edit_product));
                 nameText.setVisibility(View.GONE);
+                deleteButton.setVisibility(View.GONE);
                 priceText.setVisibility(View.GONE);
                 qtyText.setVisibility(View.GONE);
                 qtyDown.setVisibility(View.GONE);
