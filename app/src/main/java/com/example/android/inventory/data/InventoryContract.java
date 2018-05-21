@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 public class InventoryContract {
 
     public static final String CONTENT_AUTHORITY = "com.example.android.inventory";
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_PRODUCTS = "products";
 
     public static class InventoryEntry implements BaseColumns{

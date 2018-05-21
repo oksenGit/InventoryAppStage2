@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/product_image"
@@ -50,6 +49,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:textColor="@color/colorBackground"
             android:textSize="18sp"
             tools:text="Title" />
@@ -82,7 +82,7 @@
             android:gravity="center"
             android:focusable="false"
             android:padding="10dp"
-            android:text="Save"
+            android:text="@string/save"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -112,7 +112,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Product Name"
+        android:hint="@string/product_name"
         android:inputType="textPersonName"
         android:textColor="@color/colorPrimary"
         android:textColorHint="@color/colorAccent"
@@ -157,7 +157,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:ems="10"
-        android:hint="Price"
+        android:hint="@string/price_hint"
         android:inputType="numberDecimal"
         android:textColor="@color/colorPrimary"
         android:textColorHint="@color/colorAccent"
@@ -298,7 +298,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:text="TextView"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="@+id/textView9"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
@@ -311,7 +310,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:ems="10"
-                android:hint="phone"
+                android:hint="@string/phone_hint"
                 android:inputType="phone"
                 android:textColor="@color/colorPrimary"
                 android:textColorHint="@color/colorAccent"
@@ -331,7 +330,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/call" />
+                app:srcCompat="@drawable/call"
+                android:focusable="true" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>

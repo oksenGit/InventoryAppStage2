@@ -2,27 +2,19 @@ package com.example.android.inventory;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.inventory.data.InventoryContract.InventoryEntry;
-import com.example.android.inventory.data.InventoryDbHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,14 +23,15 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
     private static final int INVENTORY_LOADER = 1;
     @BindView(R.id.list)
-    ListView listView;
+    private ListView listView;
 
     @BindView(R.id.inventory_add)
-    TextView addProductButton;
+    private TextView addProductButton;
 
-    @BindView(R.id.empty_text) TextView emptyText;
+    @BindView(R.id.empty_text)
+    private TextView emptyText;
 
-    InvetoryCursorAdapter cursorAdapter;
+    private InventoryCursorAdapter cursorAdapter;
 
 
 
@@ -48,7 +41,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         setContentView(R.layout.activity_inventory);
         ButterKnife.bind(this);
 
-        cursorAdapter = new InvetoryCursorAdapter(this,null);
+        cursorAdapter = new InventoryCursorAdapter(this,null);
         listView.setAdapter(cursorAdapter);
 
         addProductButton.setOnClickListener(new View.OnClickListener() {
@@ -77,18 +70,6 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
 
-
-    private void insertProduct(){
-        ContentValues values = new ContentValues();
-        values.put(InventoryEntry.COLUMN_PRODUCT_IMAGE, "");
-        values.put(InventoryEntry.COLUMN_PRODUCT_NAME, "Potato");
-        values.put(InventoryEntry.COLUMN_PRODUCT_PRICE, 2.5);
-        values.put(InventoryEntry.COLUMN_PRODUCT_QUANTITY, 5);
-        values.put(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_NAME, "Omar");
-        values.put(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, "011011011");
-
-        Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
-    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {

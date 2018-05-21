@@ -1,55 +1,45 @@
 package com.example.android.inventory;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+        import android.content.ContentUris;
+        import android.content.ContentValues;
+        import android.content.Context;
+        import android.database.Cursor;
+        import android.net.Uri;
+        import android.text.TextUtils;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.Button;
+        import android.widget.CursorAdapter;
+        import android.widget.ImageView;
+        import android.widget.TextView;
+        import com.example.android.inventory.data.InventoryContract;
+        import com.squareup.picasso.Picasso;
+        import butterknife.BindView;
+        import butterknife.ButterKnife;
 
-import com.example.android.inventory.data.InventoryContract;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.PicassoProvider;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class InvetoryCursorAdapter extends CursorAdapter {
+public class InventoryCursorAdapter extends CursorAdapter {
 
     @BindView(R.id.item_image)
-    ImageView image;
+    private ImageView image;
 
     @BindView(R.id.item_name)
-    TextView name;
+    private TextView name;
 
     @BindView(R.id.item_summary)
-    TextView summary;
+    private TextView summary;
 
     @BindView(R.id.item_sale)
-    Button sale;
+    private Button sale;
 
-    public InvetoryCursorAdapter(Context context, Cursor c) {
+    public InventoryCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        return LayoutInflater.from(context).inflate(R.layout.list_item, viewGroup,false);
+        return LayoutInflater.from(context).inflate(R.layout.list_item, viewGroup, false);
     }
 
     @Override
@@ -68,30 +58,30 @@ public class InvetoryCursorAdapter extends CursorAdapter {
         final int currentQuantity = cursor.getInt(quantityColumnIndex);
         final String currentImage = cursor.getString(imageColumnIndex);
         Uri imageUri = null;
-        if(!TextUtils.isEmpty(currentImage))
-           imageUri = Uri.parse(currentImage);
-        if(imageUri == null || TextUtils.isEmpty(currentImage)){
+        if (!TextUtils.isEmpty(currentImage))
+            imageUri = Uri.parse(currentImage);
+        if (imageUri == null || TextUtils.isEmpty(currentImage)) {
             image.setImageResource(R.drawable.noimage);
         } else {
-            Log.i("TAG","image Uri = " + imageUri.toString());
+            Log.i("TAG", "image Uri = " + imageUri.toString());
             Picasso.get().load(imageUri).into(image);
 
         }
 
         name.setText(currentName);
 
-        String summaryString = "$"+currentPrice+" - "+view.getResources().getString(R.string.qty)+currentQuantity;
+        String summaryString = "$" + currentPrice + " - " + view.getResources().getString(R.string.qty) + currentQuantity;
         summary.setText(summaryString);
 
         sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentQuantity>0){
+                if (currentQuantity > 0) {
                     ContentValues values = new ContentValues();
                     Uri uri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
-                    values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY, currentQuantity-1);
+                    values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY, currentQuantity - 1);
 
-                    int rowsAffected = view.getContext().getContentResolver().update(uri, values, null, null);
+                    view.getContext().getContentResolver().update(uri, values, null, null);
                 }
             }
         });

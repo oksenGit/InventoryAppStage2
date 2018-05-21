@@ -40,50 +40,50 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
     private int currentMode; //We ge its value from intent parameters as Details and Edit Uri is the same
     private Uri productUri; // We need to get the product ID from that Uri
     private Uri productImageUri;
-    String imageString;
-    boolean imageLoadedFromDatabase = false;
+    private String imageString;
+    private boolean imageLoadedFromDatabase = false;
 
     //Binding all the Views in this activity and decide what to show
     //depending on our current mode using the function modeSetter
     //which will work on displaying only what should be displayed
     @BindView(R.id.product_edit)
-    ImageView editButton;
+    private ImageView editButton;
     @BindView(R.id.product_delete)
-    ImageView deleteButton;
+    private ImageView deleteButton;
     @BindView(R.id.product_save)
-    TextView saveText;
+    private TextView saveText;
     @BindView(R.id.product_add_edit_image)
-    FloatingActionButton add_edit_ImageButton;
+    private FloatingActionButton add_edit_ImageButton;
     @BindView(R.id.product_title)
-    TextView titleText;
+    private TextView titleText;
     @BindView(R.id.product_image)
-    ImageView productimage;
+    private ImageView productImage;
     @BindView(R.id.product_name_edit)
-    EditText nameEdit;
+    private EditText nameEdit;
     @BindView(R.id.product_name_text)
-    TextView nameText;
+    private TextView nameText;
     @BindView(R.id.product_price_edit)
-    EditText priceEdit;
+    private EditText priceEdit;
     @BindView(R.id.product_price_text)
-    TextView priceText;
+    private TextView priceText;
     @BindView(R.id.product_qty_edit)
-    EditText qtyEdit;
+    private EditText qtyEdit;
     @BindView(R.id.product_qty_text)
-    TextView qtyText;
+    private TextView qtyText;
     @BindView(R.id.product_qty_up)
-    ImageButton qtyUp;
+    private ImageButton qtyUp;
     @BindView(R.id.product_qty_down)
-    ImageButton qtyDown;
+    private ImageButton qtyDown;
     @BindView(R.id.product_supplier_edit)
-    EditText productSupplierEdit;
+    private EditText productSupplierEdit;
     @BindView(R.id.product_supplier_text)
-    TextView productSupplierText;
+    private TextView productSupplierText;
     @BindView(R.id.product_phone_edit)
-    EditText productPhoneEdit;
+    private EditText productPhoneEdit;
     @BindView(R.id.product_phone_text)
-    TextView productPhoneText;
+    private TextView productPhoneText;
     @BindView(R.id.product_call)
-    FloatingActionButton callButton;
+    private FloatingActionButton callButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,9 +138,9 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentDailer = new Intent(Intent.ACTION_DIAL);
-                intentDailer.setData(Uri.parse("tel:" + productPhoneText.getText().toString()));
-                startActivity(intentDailer);
+                Intent intentDialer = new Intent(Intent.ACTION_DIAL);
+                intentDialer.setData(Uri.parse("tel:" + productPhoneText.getText().toString()));
+                startActivity(intentDialer);
             }
         });
 
@@ -150,6 +150,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                 Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, PICK_IMAGE_REQUEST);
+
             }
         });
 
@@ -161,19 +162,21 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             productImageUri = data.getData();
-            imageString = productImageUri.toString();
-            Log.i(LOG, "RESULT URI:" + productImageUri.toString());
-            Picasso.get().load(productImageUri).into(productimage);
+            if (productImageUri != null) {
+                imageString = productImageUri.toString();
+                Log.i(LOG, "RESULT URI:" + productImageUri.toString());
+            }
+            Picasso.get().load(productImageUri).into(productImage);
         }
     }
 
     //Function created flexible to any increment or decrement
     //but in our case we will only give it 1 or -1 as input
-    void qtyControl(int amount) {
+    private void qtyControl(int amount) {
         int currentQty = Integer.parseInt(qtyText.getText().toString());
         if (currentQty + amount >= 0) {
             currentQty += amount;
-            qtyText.setText(currentQty + "");
+            qtyText.setText(String.valueOf(currentQty));
             ContentValues values = new ContentValues();
             Uri uri = productUri;
             values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY, currentQty);
@@ -181,7 +184,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         }
     }
 
-    void modeSetter(int mode) {
+    private void modeSetter(int mode) {
         switch (mode) {
             case MODE_ADD:
                 editButton.setVisibility(View.GONE);
@@ -228,7 +231,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         }
     }
 
-    boolean saveProduct() {
+    private boolean saveProduct() {
         String nameString = nameEdit.getText().toString().trim();
         String priceString = priceEdit.getText().toString().trim();
         String qtyString = qtyEdit.getText().toString().trim();
@@ -240,7 +243,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                 TextUtils.isEmpty(qtyString) ||
                 TextUtils.isEmpty(supplierString) ||
                 TextUtils.isEmpty(phoneString)) {
-            Toast.makeText(getApplicationContext(), "All Fields are Requeried execpt the image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "All Fields are Required except the image", Toast.LENGTH_SHORT).show();
 
             return false;
         } else {
@@ -301,7 +304,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         alertDialog.show();
     }
 
-    void deleteProduct() {
+    private void deleteProduct() {
         if (productUri != null) {
             int rowDeleted = getContentResolver().delete(productUri, null, null);
             if (rowDeleted == 0)
@@ -354,20 +357,20 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
             if (currentMode == MODE_EDIT) {
                 nameEdit.setText(name);
-                priceEdit.setText(price + "");
-                qtyEdit.setText(qty + "");
+                priceEdit.setText(String.valueOf(price));
+                qtyEdit.setText(String.valueOf(qty));
                 productSupplierEdit.setText(supplier);
                 productPhoneEdit.setText(phone);
             } else {
                 nameText.setText(name);
-                priceText.setText(price + "");
-                qtyText.setText(qty + "");
+                priceText.setText(String.valueOf(price));
+                qtyText.setText(String.valueOf(qty));
                 productSupplierText.setText(supplier);
                 productPhoneText.setText(phone);
             }
             if (productImageUri != null && !TextUtils.isEmpty(imageString)) {
                 Log.i(LOG, productImageUri.toString() + "FROM LOAD");
-                Picasso.get().load(productImageUri).into(productimage);
+                Picasso.get().load(productImageUri).into(productImage);
             }
         }
     }
@@ -379,7 +382,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         qtyEdit.setText("");
         productSupplierEdit.setText("");
         productPhoneEdit.setText("");
-        productimage.setImageBitmap(null);
+        productImage.setImageBitmap(null);
     }
 
 }

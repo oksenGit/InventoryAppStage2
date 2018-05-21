@@ -67,7 +67,7 @@ public class ProductInfoProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case PRODUCTS:
@@ -125,7 +125,6 @@ public class ProductInfoProvider extends ContentProvider {
         //Images can be Null
 
 
-        // Get writeable database
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         long id = database.insert(InventoryContract.InventoryEntry.TABLE_NAME, null, values);
@@ -135,16 +134,13 @@ public class ProductInfoProvider extends ContentProvider {
             return null;
         }
 
-        // Notify all listeners that the data has changed for the product content URI
         getContext().getContentResolver().notifyChange(uri, null);
-
-        // Return the new URI with the ID (of the newly inserted row) appended at the end
         return ContentUris.withAppendedId(uri, id);
     }
 
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         // Get writeable database
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -238,24 +234,18 @@ public class ProductInfoProvider extends ContentProvider {
 
         //Image can be null
 
-        // If there are no values to update, then don't try to update the database
         if (values.size() == 0) {
             return 0;
         }
 
-        // Otherwise, get writeable database to update the data
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        // Perform the update on the database and get the number of rows affected
         int rowsUpdated = database.update(InventoryContract.InventoryEntry.TABLE_NAME, values, selection, selectionArgs);
 
-        // If 1 or more rows were updated, then notify all listeners that the data at the
-        // given URI has changed
         if (rowsUpdated != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
-        // Return the number of rows updated
         return rowsUpdated;
     }
 }
