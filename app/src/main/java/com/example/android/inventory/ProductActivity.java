@@ -47,43 +47,43 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
     //depending on our current mode using the function modeSetter
     //which will work on displaying only what should be displayed
     @BindView(R.id.product_edit)
-    private ImageView editButton;
+    ImageView editButton;
     @BindView(R.id.product_delete)
-    private ImageView deleteButton;
+    ImageView deleteButton;
     @BindView(R.id.product_save)
-    private TextView saveText;
+    TextView saveText;
     @BindView(R.id.product_add_edit_image)
-    private FloatingActionButton add_edit_ImageButton;
+    FloatingActionButton add_edit_ImageButton;
     @BindView(R.id.product_title)
-    private TextView titleText;
+    TextView titleText;
     @BindView(R.id.product_image)
-    private ImageView productImage;
+    ImageView productImage;
     @BindView(R.id.product_name_edit)
-    private EditText nameEdit;
+    EditText nameEdit;
     @BindView(R.id.product_name_text)
-    private TextView nameText;
+    TextView nameText;
     @BindView(R.id.product_price_edit)
-    private EditText priceEdit;
+    EditText priceEdit;
     @BindView(R.id.product_price_text)
-    private TextView priceText;
+    TextView priceText;
     @BindView(R.id.product_qty_edit)
-    private EditText qtyEdit;
+    EditText qtyEdit;
     @BindView(R.id.product_qty_text)
-    private TextView qtyText;
+    TextView qtyText;
     @BindView(R.id.product_qty_up)
-    private ImageButton qtyUp;
+    ImageButton qtyUp;
     @BindView(R.id.product_qty_down)
-    private ImageButton qtyDown;
+    ImageButton qtyDown;
     @BindView(R.id.product_supplier_edit)
-    private EditText productSupplierEdit;
+    EditText productSupplierEdit;
     @BindView(R.id.product_supplier_text)
-    private TextView productSupplierText;
+    TextView productSupplierText;
     @BindView(R.id.product_phone_edit)
-    private EditText productPhoneEdit;
+    EditText productPhoneEdit;
     @BindView(R.id.product_phone_text)
-    private TextView productPhoneText;
+    TextView productPhoneText;
     @BindView(R.id.product_call)
-    private FloatingActionButton callButton;
+    FloatingActionButton callButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

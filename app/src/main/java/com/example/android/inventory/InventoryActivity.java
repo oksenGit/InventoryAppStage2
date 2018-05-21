@@ -23,13 +23,13 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
     private static final int INVENTORY_LOADER = 1;
     @BindView(R.id.list)
-    private ListView listView;
+    ListView listView;
 
     @BindView(R.id.inventory_add)
-    private TextView addProductButton;
+    TextView addProductButton;
 
     @BindView(R.id.empty_text)
-    private TextView emptyText;
+    TextView emptyText;
 
     private InventoryCursorAdapter cursorAdapter;
 

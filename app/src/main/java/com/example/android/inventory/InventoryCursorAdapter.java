@@ -22,16 +22,16 @@ package com.example.android.inventory;
 public class InventoryCursorAdapter extends CursorAdapter {
 
     @BindView(R.id.item_image)
-    private ImageView image;
+    ImageView image;
 
     @BindView(R.id.item_name)
-    private TextView name;
+    TextView name;
 
     @BindView(R.id.item_summary)
-    private TextView summary;
+    TextView summary;
 
     @BindView(R.id.item_sale)
-    private Button sale;
+    Button sale;
 
     public InventoryCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
